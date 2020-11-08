@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="vue.js"></script>
+</head>
+
+<body class="bg-light">
+    <div id="app">
+        <div class="col-3 justify-content-center mx-auto" style="overflow-y:auto; max-height: 475px;">
+            <div v-for="(todo,index) in list" :key="index">
+                <div class="card my-3">
+                    <div class="card-body">
+                        <button @click="hapus(index)" class="btn btn-danger float-right">Hapus</button>
+                        <span v-if="todo.prioritas=='Penting'" class="badge badge-danger">{{ todo.prioritas }}</span>
+                        <span v-else-if="todo.prioritas=='Biasa'" class="badge badge-primary">{{ todo.prioritas }}</span>
+                        <span v-else-if="todo.prioritas=='Tidak Penting'" class="badge badge-success">{{ todo.prioritas }}</span><br>
+                        <h4>{{ todo.nama }}</h4>
+                        <p>{{ todo.catatan }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 justify-content-center mx-auto mt-4">
+            <div class="form-group">
+                <label for="todo.nama">Nama To Do</label>
+                <input id="todo.nama" v-model="todo.nama" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="todo.prioritas">Prioritas</label>
+                <select id="todo.prioritas" v-model="todo.prioritas" class="form-control">
+                    <option value="" hidden>Pilih Prioritas</option>
+                    <option value="Penting" selected>Penting</option>
+                    <option value="Biasa">Biasa</option>
+                    <option value="Tidak Penting">Tidak Penting</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="todo.catatan">Catatan</label>
+                <textarea id="todo.catatan" v-model="todo.catatan" class="form-control"></textarea>
+            </div>
+
+            <div>
+                <button class="btn btn-secondary" @click="reset">Reset</button>
+                <button class="btn btn-primary" @click="save">Simpan</button>
+            </div>
+            <br>
+            <footer class="text-center">
+                {{ dd.nama }} | {{ dd.npm }} | {{ dd.paw }}
+            </footer>
+        </div>
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            list: [],
+            todo: {
+                nama: "",
+                prioritas: "",
+                catatan: ""
+            },
+            dd: {
+                nama: 'Bagus Septianto',
+                npm: 180709623,
+                paw: 'PAW B'
+            }
+        },
+        methods: {
+            reset(){
+                this.todo.nama= "";
+                this.todo.prioritas= "";
+                this.todo.catatan= "";
+            },
+            save(){
+                var addTodo = {
+                    nama: this.todo.nama,
+                    prioritas: this.todo.prioritas,
+                    catatan: this.todo.catatan
+                };
+                this.list.push(addTodo);
+                this.reset()
+            },
+            hapus(index){
+                this.list.splice(index,1);
+            },
+        },
+    });
+</script>
+</html>
